@@ -1,0 +1,114 @@
+<html>
+
+<style>
+    body {
+        background-color:darkmagenta;
+    }
+    h1 {
+        font-style: italic;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        color: gold;
+    }
+    .button {
+        font-family:cursive;
+        font-size: larger;
+        color:navy;
+        text-align: center;
+        border:3px solid #000000;
+        background-color:lightgreen;
+    }
+</style>
+
+<script>
+
+window.onload = function()
+{
+    init();
+}
+
+function rng()
+{
+    var rngnum = (Math.random() * 5 + Math.random() * 5) / 2;
+    if (rngnum <= 1)
+    {
+        rngnum = Math.round(rngnum + 1);
+        return rngnum;
+    } else {
+        rngnum = Math.round(rngnum);
+        return rngnum;
+    }
+}
+
+function rbptgetname()
+{
+    var rbbname = "$MFT/B" + rng() + ".png";
+    var rbeaname = "$MFT/EA" + rng() + ".png";
+    var rbaname = "$MFT/A" + rng() + ".png";
+    var rbeyname = "$MFT/EY" + rng() + ".png";
+    var rbmname = "$MFT/M" + rng() + ".png";
+    var rbnename = "$MFT/NE" + rng() + ".png";
+    var rbnoname = "$MFT/NO" + rng() + ".png";
+    return [rbaname, rbnename, rbbname, rbeaname, rbeyname, rbmname, rbnoname];
+}
+
+function init()
+{
+    var rbptnames = rbptgetname();
+    imgload(-1, rbptnames);
+}
+
+function imgload(x, rbptnames)
+{
+    if (x < rbptnames.length && x != -1)
+    {
+        drawimg(x, rbptnames);
+    }
+    else if (x == -1)
+    {
+        x = 0;
+        clearcanvas();
+        drawimg(x, rbptnames);
+    }
+}
+
+function drawimg(x, rbptnames)
+{
+    var ctx = document.getElementById("canvas").getContext("2d");
+    var img = new Image();
+    img.onload = function()
+    {
+        ctx.drawImage(img, 0, 0);
+        x = x + 1;
+        imgload(x, rbptnames);
+    }
+    img.src = rbptnames[x];
+    
+    
+}
+
+function clearcanvas()
+{
+    var ctx = document.getElementById("canvas").getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "lightpink";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+</script>
+
+<head>
+    <title>Ultra Extreme Robot Generator</title>
+</head>
+
+<body>
+ <div align = "center">
+     <h1>Ultra Extreme Robot Generator</h1>
+     <canvas id="canvas" width="500" height="500" style="border:3px solid #000000;">Your browser does not support the HTML canvas tag</canvas>
+     <br>
+     <br>
+     <br>
+     <input type="button" class="button" onclick="init()" value="Generate moar!">
+ </div>
+</body>
+
+</html>
